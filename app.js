@@ -68,7 +68,6 @@ function render() {
         const body = document.getElementById('table-body');
         body.innerHTML = '';
 
-        // Проверка/создание структуры месяца
         if (!groups[currentGroupId][currentMonthKey]) groups[currentGroupId][currentMonthKey] = [];
         
         const monthData = groups[currentGroupId][currentMonthKey];
@@ -88,10 +87,22 @@ function render() {
                         <option value="Н" ${val==='Н'?'selected':''}>Н</option>
                     </select></td>`;
             }
-            tr.innerHTML = `<td class="sticky-col">
-                <button class="btn-del-row" data-del-row="${idx}">×</button>
-                <span contenteditable="true" class="edit-name" data-idx="${idx}">${row.name}</span>
-            </td>${cells}`;
+
+            // Создаем ячейку ФИО с поддержкой placeholder
+            const tdName = document.createElement('td');
+            tdName.className = 'sticky-col';
+            tdName.innerHTML = `<button class="btn-del-row" data-del-row="${idx}">×</button>`;
+            
+            const span = document.createElement('span');
+            span.contentEditable = true;
+            span.className = 'edit-name';
+            span.setAttribute('data-idx', idx);
+            span.setAttribute('data-placeholder', 'Введите ФИО...'); // Placeholder
+            span.textContent = row.name;
+            
+            tdName.appendChild(span);
+            tr.appendChild(tdName);
+            tr.innerHTML += cells;
             body.appendChild(tr);
         });
     }
@@ -117,13 +128,14 @@ document.addEventListener('click', (e) => {
         } else {
             const [y, m] = currentMonthKey.split('-').map(Number);
             const days = new Date(y, m, 0).getDate();
-            groups[currentGroupId][currentMonthKey].push({ name: "ФИО", data: Array(days).fill("") });
+            groups[currentGroupId][currentMonthKey].push({ name: "", data: Array(days).fill("") });
             save(); render();
         }
     }
     if (t.id === 'btn-back') { currentGroupId = null; render(); }
     if (t.id === 'btn-open-settings') document.getElementById('settings-modal').classList.remove('hidden');
     if (t.id === 'btn-close-settings' || t.id === 'settings-modal') document.getElementById('settings-modal').classList.add('hidden');
+    
     if (t.id === 'btn-theme-toggle') {
         const theme = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         document.body.setAttribute('data-theme', theme);
@@ -161,12 +173,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // --- ЛОГИКА ЭКСПОРТА И ИМПОРТА ---
 
-// 1. Экспорт
 document.getElementById('btn-export').onclick = () => {
     const dataStr = JSON.stringify(groups, null, 2);
     const dataBlob = new Blob([dataStr], { type: 'application/json' });
     const url = URL.createObjectURL(dataBlob);
-    
     const link = document.createElement('a');
     link.href = url;
     link.download = `academ_backup_${currentMonthKey}.json`;
@@ -176,7 +186,6 @@ document.getElementById('btn-export').onclick = () => {
     URL.revokeObjectURL(url);
 };
 
-// 2. Импорт
 document.getElementById('btn-import').onclick = () => {
     document.getElementById('import-file').click();
 };
@@ -184,25 +193,18 @@ document.getElementById('btn-import').onclick = () => {
 document.getElementById('import-file').onchange = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-
     const reader = new FileReader();
     reader.onload = (event) => {
         try {
             const importedData = JSON.parse(event.target.result);
-            
-            // Простая валидация: проверяем, что это объект
             if (typeof importedData === 'object' && !Array.isArray(importedData)) {
                 if (confirm("Это заменит все текущие данные. Продолжить?")) {
                     groups = importedData;
                     save();
-                    location.reload(); // Перезагружаем для чистого рендера
+                    location.reload();
                 }
-            } else {
-                alert("Ошибка: Неверный формат файла.");
-            }
-        } catch (err) {
-            alert("Ошибка при чтении файла: " + err.message);
-        }
+            } else { alert("Ошибка: Неверный формат файла."); }
+        } catch (err) { alert("Ошибка при чтении файла: " + err.message); }
     };
     reader.readAsText(file);
 };

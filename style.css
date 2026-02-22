@@ -31,6 +31,16 @@ th.today-mark { background-color: var(--accent) !important; color: white !import
 .sticky-col { position: sticky; left: 0; background: var(--card); z-index: 5; min-width: 140px; text-align: left; padding-left: 10px; display: flex; align-items: center; font-size: 0.85rem; }
 .btn-del-row { color: var(--n-color); background: none; border: none; font-size: 1.4rem; cursor: pointer; margin-right: 5px; }
 
+/* Стилизация Placeholder для пустых имен */
+[contenteditable="true"]:empty:before {
+    content: attr(data-placeholder);
+    color: gray;
+    opacity: 0.5;
+    font-style: italic;
+    pointer-events: none;
+}
+.edit-name { display: inline-block; min-width: 20px; outline: none; }
+
 .status-select { width: 100%; height: 100%; border: none; background: transparent; color: var(--text); font-weight: bold; text-align-last: center; appearance: none; outline: none; }
 td.cell-Б { background: var(--b-color); }
 td.cell-О { background: var(--o-color); }
@@ -46,18 +56,19 @@ td.cell-О select { color: black; }
 
 .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex !important; align-items: center; justify-content: center; z-index: 2000; backdrop-filter: blur(3px); }
 .modal.hidden { display: none !important; }
-.modal-card { background: var(--card); width: 60%; padding: 25px; border-radius: 25px; text-align: center; }
-.ui-btn { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 12px; border: none; background: var(--accent); color: white; font-weight: bold; cursor: pointer; }
-.secondary { background: #6c757d; }
+.modal-card { background: var(--card); width: 65%; max-width: 300px; padding: 25px; border-radius: 25px; text-align: center; max-height: 85vh; overflow-y: auto; }
+.ui-btn { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 12px; border: none; background: var(--accent); color: white; font-weight: bold; cursor: pointer; box-shadow: 0 3px 0 var(--accent-dark); }
+.ui-btn:active { transform: translateY(2px); box-shadow: none; }
+.secondary { background: #6c757d; box-shadow: 0 3px 0 #444; }
 
 /* Блок авторов */
 .authors-info {
-    margin-top: 20px;
+    margin-top: 15px;
     padding-top: 15px;
     border-top: 1px solid var(--border);
 }
-.authors-info h4 { margin: 0; font-size: 0.9rem; opacity: 0.7; }
-.authors-info p { margin: 5px 0 15px; font-weight: bold; font-size: 0.95rem; }
+.authors-info h4 { margin: 0; font-size: 0.85rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; }
+.authors-info p { margin: 5px 0 15px; font-weight: bold; font-size: 1rem; color: var(--accent); }
 
 /* Кнопки соцсетей */
 .social-links {
@@ -71,19 +82,17 @@ td.cell-О select { color: black; }
     text-decoration: none;
     color: white;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 12px;
     font-size: 0.9rem;
     font-weight: bold;
     display: block;
     transition: opacity 0.2s;
-    box-shadow: 0 3px 0 rgba(0,0,0,0.1);
 }
+.soc-btn:active { opacity: 0.8; }
 
-.soc-btn:active { transform: translateY(2px); box-shadow: none; }
-
-.tg { background-color: #0088cc; } /* Цвет Telegram */
-.ds { background-color: #5865F2; } /* Цвет Discord */
-.gh { background-color: #333; }    /* Цвет GitHub */
+.tg { background-color: #0088cc; } 
+.ds { background-color: #5865F2; } 
+.gh { background-color: #333; }    
 
 [data-theme="dark"] .gh { background-color: #444; border: 1px solid #666; }
 
