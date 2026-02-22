@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Успеваемость</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="light">
+    <!-- Основная область контента -->
+    <div id="main-content">
+        <!-- Экран Групп -->
+        <section id="group-screen" class="screen active">
+            <header><h1 class="center-title">Мои Группы</h1></header>
+            <div id="group-list" class="grid-list"></div>
+        </section>
+
+        <!-- Экран Таблицы -->
+        <section id="attendance-screen" class="screen hidden">
+            <header>
+                <button id="btn-back" class="back-btn-icon">⬅</button>
+                <h1 id="current-group-title" class="center-title">Группа</h1>
+            </header>
+            <div class="table-container">
+                <table id="attendance-table">
+                    <thead><tr id="header-row"><th class="sticky-col">ФИО</th></tr></thead>
+                    <tbody id="table-body"></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <!-- Нижняя панель -->
+    <nav class="dockbar">
+        <div class="dock-side"></div>
+        <div class="dock-center">
+            <button id="btn-main-add" class="circle-add-btn">+</button>
+        </div>
+        <div class="dock-side">
+            <button id="btn-open-settings" class="clean-btn">⚙️</button>
+        </div>
+    </nav>
+
+    <!-- Окно настроек -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-card">
+            <h3>Настройки</h3>
+            <button id="btn-theme-toggle" class="ui-btn full-width">Тема 🌓</button>
+            <button id="btn-close-settings" class="ui-btn full-width secondary">Закрыть</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
