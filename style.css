@@ -16,30 +16,33 @@ body { margin: 0; font-family: -apple-system, sans-serif; background: var(--bg);
 header { padding: 45px 15px 15px; background: var(--card); border-bottom: 1px solid var(--border); display: flex; align-items: center; position: relative; }
 .header-center-info { flex: 1; display: flex; flex-direction: column; align-items: center; }
 .center-title { font-size: 1.1rem; font-weight: bold; margin: 0; }
-.month-picker { background: transparent; border: none; color: var(--accent); font-weight: bold; font-size: 0.85rem; outline: none; cursor: pointer; }
+.month-picker { background: transparent; border: none; color: var(--accent); font-weight: bold; font-size: 0.85rem; outline: none; }
 .back-btn-icon { background: none; border: none; color: var(--accent); font-size: 1.6rem; cursor: pointer; position: absolute; left: 10px; z-index: 50; }
 
 .grid-list { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; overflow-y: auto; }
 .group-card-wrapper { position: relative; }
 .group-card { background: var(--card); padding: 30px 10px; border-radius: 18px; text-align: center; border: 1px solid var(--border); font-weight: 600; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
-.btn-del { position: absolute; top: -10px; right: -10px; background: var(--n-color); color: white; border: none; border-radius: 50%; width: 28px; height: 28px; font-weight: bold; cursor: pointer; z-index: 100; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+.btn-del { position: absolute; top: -10px; right: -10px; background: var(--n-color); color: white; border: none; border-radius: 50%; width: 28px; height: 28px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 100; }
 
 .table-container { overflow: auto; flex: 1; -webkit-overflow-scrolling: touch; }
 table { border-collapse: collapse; width: 100%; }
-th, td { border: 1px solid var(--border); padding: 0; min-width: 50px; height: 45px; text-align: center; font-size: 0.9rem; }
-th.today-mark { background-color: var(--accent) !important; color: white !important; border-radius: 10px 10px 0 0; }
-.sticky-col { position: sticky; left: 0; background: var(--card); z-index: 5; min-width: 140px; text-align: left; padding-left: 10px; display: flex; align-items: center; font-size: 0.85rem; }
+th, td { border: 1px solid var(--border); padding: 0; min-width: 50px; height: 45px; text-align: center; font-size: 0.9rem; position: relative; }
+th.today-mark { background-color: var(--accent) !important; color: white !important; }
+.sticky-col { position: sticky; left: 0; background: var(--card); z-index: 5; min-width: 140px; text-align: left; padding-left: 10px; display: flex; align-items: center; }
 .btn-del-row { color: var(--n-color); background: none; border: none; font-size: 1.4rem; cursor: pointer; margin-right: 5px; }
 
-/* Стилизация Placeholder для пустых имен */
-[contenteditable="true"]:empty:before {
-    content: attr(data-placeholder);
-    color: gray;
-    opacity: 0.5;
-    font-style: italic;
-    pointer-events: none;
+/* Значки отработки */
+.duty-status-mark {
+    position: absolute; top: 2px; left: 2px; font-size: 15px; width: 18px; height: 18px;
+    display: flex; align-items: center; justify-content: center; border-radius: 4px;
+    background: white; z-index: 6; cursor: pointer;
 }
-.edit-name { display: inline-block; min-width: 20px; outline: none; }
+.mark-unsolved { color: var(--n-color); font-weight: 900; }
+.mark-solved { color: var(--b-color); font-weight: 900; }
+td:not(.cell-О) .duty-status-mark { display: none; }
+
+[contenteditable="true"]:empty:before { content: attr(data-placeholder); color: gray; opacity: 0.5; font-style: italic; pointer-events: none; }
+.edit-name { outline: none; display: inline-block; min-width: 20px; }
 
 .status-select { width: 100%; height: 100%; border: none; background: transparent; color: var(--text); font-weight: bold; text-align-last: center; appearance: none; outline: none; }
 td.cell-Б { background: var(--b-color); }
@@ -56,48 +59,14 @@ td.cell-О select { color: black; }
 
 .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: flex !important; align-items: center; justify-content: center; z-index: 2000; backdrop-filter: blur(3px); }
 .modal.hidden { display: none !important; }
-.modal-card { background: var(--card); width: 65%; max-width: 300px; padding: 25px; border-radius: 25px; text-align: center; max-height: 85vh; overflow-y: auto; }
-.ui-btn { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 12px; border: none; background: var(--accent); color: white; font-weight: bold; cursor: pointer; box-shadow: 0 3px 0 var(--accent-dark); }
-.ui-btn:active { transform: translateY(2px); box-shadow: none; }
-.secondary { background: #6c757d; box-shadow: 0 3px 0 #444; }
+.modal-card { background: var(--card); width: 60%; max-width: 280px; padding: 20px; border-radius: 25px; text-align: center; }
+.ui-btn { width: 100%; padding: 12px; margin-bottom: 10px; border-radius: 12px; border: none; background: var(--accent); color: white; font-weight: bold; cursor: pointer; }
+.secondary { background: #6c757d; }
 
-/* Блок авторов */
-.authors-info {
-    margin-top: 15px;
-    padding-top: 15px;
-    border-top: 1px solid var(--border);
-}
-.authors-info h4 { margin: 0; font-size: 0.85rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; }
-.authors-info p { margin: 5px 0 15px; font-weight: bold; font-size: 1rem; color: var(--accent); }
-
-/* Кнопки соцсетей */
-.social-links {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-bottom: 20px;
-}
-
-.soc-btn {
-    text-decoration: none;
-    color: white;
-    padding: 10px;
-    border-radius: 12px;
-    font-size: 0.9rem;
-    font-weight: bold;
-    display: block;
-    transition: opacity 0.2s;
-}
-.soc-btn:active { opacity: 0.8; }
-
-.tg { background-color: #0088cc; } 
-.ds { background-color: #5865F2; } 
-.gh { background-color: #333; }    
-
-[data-theme="dark"] .gh { background-color: #444; border: 1px solid #666; }
-
-/* Адаптация для очень узких экранов */
-@media (max-width: 350px) {
-    .modal-card { width: 85%; }
-    .soc-btn { font-size: 0.8rem; padding: 8px; }
-}
+.duty-name { font-size: 1.2rem; font-weight: bold; color: var(--accent); margin: 5px 0; border-bottom: 2px solid var(--border); display: inline-block; padding: 0 10px; }
+.authors-info { margin-top: 15px; padding-top: 10px; border-top: 1px solid var(--border); }
+.authors-info h4 { margin: 0; font-size: 0.8rem; opacity: 0.6; }
+.authors-info p { margin: 5px 0 10px; font-weight: bold; font-size: 1rem; color: var(--accent); }
+.social-links { display: flex; flex-direction: column; gap: 8px; margin-bottom: 15px; }
+.soc-btn { text-decoration: none; color: white; padding: 8px; border-radius: 10px; font-size: 0.85rem; font-weight: bold; text-align: center; }
+.tg { background: #0088cc; } .ds { background: #5865F2; } .gh { background: #333; }
