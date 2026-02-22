@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body data-theme="light">
-    <!-- Основная область контента -->
     <div id="main-content">
         <!-- Экран Групп -->
         <section id="group-screen" class="screen active">
@@ -19,18 +18,20 @@
         <section id="attendance-screen" class="screen hidden">
             <header>
                 <button id="btn-back" class="back-btn-icon">⬅</button>
-                <h1 id="current-group-title" class="center-title">Группа</h1>
+                <div class="header-center-info">
+                    <h1 id="current-group-title" class="center-title">Группа</h1>
+                    <select id="month-select" class="month-picker"></select>
+                </div>
             </header>
             <div class="table-container">
                 <table id="attendance-table">
-                    <thead><tr id="header-row"><th class="sticky-col">ФИО</th></tr></thead>
+                    <thead><tr id="header-row"></tr></thead>
                     <tbody id="table-body"></tbody>
                 </table>
             </div>
         </section>
     </div>
 
-    <!-- Нижняя панель -->
     <nav class="dockbar">
         <div class="dock-side"></div>
         <div class="dock-center">
@@ -41,7 +42,6 @@
         </div>
     </nav>
 
-    <!-- Окно настроек -->
     <div id="settings-modal" class="modal hidden">
         <div class="modal-card">
             <h3>Настройки</h3>
